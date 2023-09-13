@@ -190,11 +190,31 @@ fn get_quote(quote_size: &u8) {
 }
 
 pub mod file {
+    //! A module for file related actions.
     use rand::prelude::SliceRandom;
     use std::fs;
     use std::io::Read;
 
-    /// Does not account for amount of fortunes
+    /// Picks a random file from a given directory and returns its contents as a string.
+    ///
+    /// # Arguments
+    ///
+    /// * `dir` - The path to the directory from which a random file will be chosen.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the contents of the randomly chosen file as a `String`.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The provided directory path is invalid or inaccessible.
+    /// * No files are found in the specified directory.
+    /// * There's an issue reading the chosen file.
+    ///
+    /// # Note
+    ///
+    /// This function does not account for the number of fortunes (or entries) within the files.
     pub fn pick_file(dir: String) -> Result<String, Box<dyn std::error::Error>> {
         let mut rng = rand::thread_rng();
         let files: Vec<_> = fs::read_dir(dir)?.collect();
