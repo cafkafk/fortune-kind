@@ -11,6 +11,7 @@ use std::process::exit;
 const SHORT: usize = 150;
 
 pub mod search {
+    //! A module for searching patterns within strings using regular expressions.
     use std::error::Error;
 
     use grep_matcher::Matcher;
@@ -47,6 +48,25 @@ pub mod search {
         Ok(format!("{:#?}", matches))
     }
 
+    /// Searches for a given pattern within an input string and returns the line
+    /// number and matched string.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - The input string to search within, represented as a byte slice.
+    /// * `pattern` - The pattern to search for, represented as a string slice.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a vector of tuples. Each tuple contains:
+    /// * A `u64` representing the line number where the match was found.
+    /// * A `String` representing the matched string.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The provided pattern is not a valid regular expression.
+    /// * There's an issue during the search operation.
     pub fn search_string(
         input: &[u8],
         pattern: &str,
@@ -69,6 +89,8 @@ pub mod search {
     #[cfg(test)]
     mod tests {
         use super::*;
+
+        /// Tests the `search_string` function with a simple pattern.
         #[test]
         fn search_string_simple() {
             let res = search_string(
@@ -79,6 +101,8 @@ pub mod search {
             assert_eq!(res.len(), 1);
             assert_eq!(res[0], (1, "person".to_string()));
         }
+
+        /// Tests the `search_string` function with a pattern that has no matches.
         #[test]
         fn search_string_no_match() {
             let res = search_string(b"", r"not found").unwrap();
