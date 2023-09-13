@@ -1,0 +1,14 @@
+[package]
+name = "fortune"
+description = "Fortune, but kind-a better"
+authors = ["Christina Sørensen <christina@cafkafk.com>"]
+categories = ["command-line-utilities"]
+edition = "2021"
+rust-version = "1.65.0"
+readme = "README.md"
+license = "GPL-3.0-only"
+version = "0.0.1"
+
+[dependencies]
+clap = { version = "4.3.23", features = ["cargo"] }
+rand = "0.8.5"
