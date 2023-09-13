@@ -1,5 +1,5 @@
 [package]
-name = "fortune"
+name = "fortune-kind"
 description = "Fortune, but kind-a better"
 authors = ["Christina Sørensen <christina@cafkafk.com>"]
 categories = ["command-line-utilities"]
