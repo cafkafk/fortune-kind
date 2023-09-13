@@ -57,7 +57,6 @@ pub mod search {
             &matcher,
             input,
             UTF8(|lnum, line| {
-                // We are guaranteed to find a match, so the unwrap is OK.
                 let mymatch = matcher.find(line.as_bytes())?.unwrap();
                 matches.push((lnum, line[mymatch].to_string()));
                 Ok(true)
@@ -71,7 +70,7 @@ pub mod search {
     mod tests {
         use super::*;
         #[test]
-        fn search_string_test() {
+        fn search_string_simple() {
             let res = search_string(
                 b"To the world you may be just one person, but to one person, you may be the world.",
                 r"person"
@@ -79,6 +78,12 @@ pub mod search {
             .unwrap();
             assert_eq!(res.len(), 1);
             assert_eq!(res[0], (1, "person".to_string()));
+        }
+        #[test]
+        fn search_string_no_match() {
+            let res = search_string(b"", r"not found").unwrap();
+            assert_eq!(res.len(), 0);
+            assert_eq!(res, vec![]);
         }
     }
 }
