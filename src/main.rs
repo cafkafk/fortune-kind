@@ -10,6 +10,79 @@ use std::process::exit;
 
 const SHORT: usize = 150;
 
+pub mod search {
+    use std::error::Error;
+
+    use grep_matcher::Matcher;
+    use grep_regex::RegexMatcher;
+    use grep_searcher::sinks::UTF8;
+    use grep_searcher::Searcher;
+
+    const SHERLOCK: &'static [u8] = b"\
+    For the Doctor Watsons of this world, as opposed to the Sherlock
+    Holmeses, success in the province of detective work must always
+    be, to a very large extent, the result of luck. Sherlock Holmes
+    can extract a clew from a wisp of straw or a flake of cigar ash;
+    but Doctor Watson has to have it taken out for him and dusted,
+    and exhibited clearly, with a label attached.
+    ";
+
+    pub fn example() -> Result<String, Box<dyn Error>> {
+        let matcher = RegexMatcher::new(r"Doctor \w+")?;
+        let mut matches: Vec<(u64, String)> = vec![];
+        Searcher::new().search_slice(
+            &matcher,
+            SHERLOCK,
+            UTF8(|lnum, line| {
+                // We are guaranteed to find a match, so the unwrap is OK.
+                let mymatch = matcher.find(line.as_bytes())?.unwrap();
+                matches.push((lnum, line[mymatch].to_string()));
+                Ok(true)
+            }),
+        )?;
+
+        assert_eq!(matches.len(), 2);
+        assert_eq!(matches[0], (1, "Doctor Watsons".to_string()));
+        assert_eq!(matches[1], (5, "Doctor Watson".to_string()));
+        Ok(format!("{:#?}", matches))
+    }
+
+    pub fn search_string(
+        input: &[u8],
+        pattern: &str,
+    ) -> Result<Vec<(u64, String)>, Box<dyn Error>> {
+        let matcher = RegexMatcher::new(pattern)?;
+        let mut matches: Vec<(u64, String)> = vec![];
+        Searcher::new().search_slice(
+            &matcher,
+            input,
+            UTF8(|lnum, line| {
+                // We are guaranteed to find a match, so the unwrap is OK.
+                let mymatch = matcher.find(line.as_bytes())?.unwrap();
+                matches.push((lnum, line[mymatch].to_string()));
+                Ok(true)
+            }),
+        )?;
+
+        Ok(matches)
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        #[test]
+        fn search_string_test() {
+            let res = search_string(
+                b"To the world you may be just one person, but to one person, you may be the world.",
+                r"person"
+            )
+            .unwrap();
+            assert_eq!(res.len(), 1);
+            assert_eq!(res[0], (1, "person".to_string()));
+        }
+    }
+}
+
 fn main() -> io::Result<()> {
     let matches = command!()
         .author(crate_authors!("\n"))
