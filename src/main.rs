@@ -227,4 +227,35 @@ pub mod file {
 
         Ok(contents)
     }
+
+    /// Reads the contents of all files in a given directory and returns them as a vector of strings.
+    ///
+    /// # Arguments
+    ///
+    /// * `dir` - The path to the directory from which all files will be read.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a vector of strings, where each string represents the contents of a file in the directory.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The provided directory path is invalid or inaccessible.
+    /// * There's an issue reading any of the files.
+    pub fn read_all_files(dir: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+        let entries = fs::read_dir(dir)?;
+        let mut contents_vec = Vec::new();
+
+        for entry in entries {
+            let path = entry?.path();
+            if path.is_file() {
+                let mut contents = String::new();
+                fs::File::open(path)?.read_to_string(&mut contents)?;
+                contents_vec.push(contents);
+            }
+        }
+
+        Ok(contents_vec)
+    }
 }
