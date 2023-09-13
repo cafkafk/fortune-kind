@@ -1,11 +1,8 @@
 use clap::{arg, command, crate_authors, Arg};
-use rand::prelude::SliceRandom;
 use rand::thread_rng;
 use rand::Rng;
 use std::env;
-use std::fs;
 use std::io;
-use std::io::Read;
 use std::process::exit;
 
 const SHORT: usize = 150;
@@ -158,7 +155,7 @@ fn random(i: usize) -> usize {
 }
 
 fn get_quote(quote_size: &u8) {
-    let file = pick_file("fortunes".to_string()).unwrap();
+    let file = file::pick_file("fortunes".to_string()).unwrap();
     let quotes: Vec<&str> = file.split("\n%\n").collect();
 
     let mut tmp = vec![];
@@ -192,16 +189,22 @@ fn get_quote(quote_size: &u8) {
     }
 }
 
-/// Does not account for amount of fortunes
-fn pick_file(dir: String) -> Result<String, Box<dyn std::error::Error>> {
-    let mut rng = rand::thread_rng();
-    let files: Vec<_> = fs::read_dir(dir)?.collect();
-    // println!("{:#?files}");
-    let file = files.choose(&mut rng).ok_or("No files found")?;
-    let path = file.as_ref().unwrap().path();
+pub mod file {
+    use rand::prelude::SliceRandom;
+    use std::fs;
+    use std::io::Read;
 
-    let mut contents = String::new();
-    fs::File::open(path)?.read_to_string(&mut contents)?;
+    /// Does not account for amount of fortunes
+    pub fn pick_file(dir: String) -> Result<String, Box<dyn std::error::Error>> {
+        let mut rng = rand::thread_rng();
+        let files: Vec<_> = fs::read_dir(dir)?.collect();
+        // println!("{:#?files}");
+        let file = files.choose(&mut rng).ok_or("No files found")?;
+        let path = file.as_ref().unwrap().path();
 
-    Ok(contents)
+        let mut contents = String::new();
+        fs::File::open(path)?.read_to_string(&mut contents)?;
+
+        Ok(contents)
+    }
 }
