@@ -12,4 +12,7 @@ version = "0.0.1"
 [dependencies]
 clap = { version = "4.3.23", features = ["cargo"] }
 grep = "0.2.12"
+grep-matcher = "0.1.6"
+grep-regex = "0.1.11"
+grep-searcher = "0.1.11"
 rand = "0.8.5"

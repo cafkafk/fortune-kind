@@ -198,6 +198,8 @@ version = "0.0.1"
 dependencies = [
  "clap",
  "grep",
+ "grep-matcher",
+ "grep-regex",
  "grep-searcher",
  "rand",
 ]
