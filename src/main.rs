@@ -319,4 +319,64 @@ pub mod file {
 
         Ok(contents_vec)
     }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use std::fs::File;
+        use std::io::Write;
+
+        // Helper function to create a temporary directory with some files for testing.
+        fn setup_test_directory() -> tempfile::TempDir {
+            let tmp_dir = tempfile::tempdir().unwrap();
+            let file1_path = tmp_dir.path().join("file1.txt");
+            let file2_path = tmp_dir.path().join("file2.txt");
+
+            let mut file1 = File::create(file1_path).unwrap();
+            let mut file2 = File::create(file2_path).unwrap();
+
+            writeln!(file1, "Content of file1").unwrap();
+            writeln!(file2, "Content of file2").unwrap();
+
+            tmp_dir
+        }
+
+        /// test_pick_file: Tests if the pick_file function can pick and read a file from a directory.
+        #[test]
+        fn test_pick_file() {
+            let tmp_dir = setup_test_directory();
+            let result = pick_file(tmp_dir.path().to_str().unwrap().to_string());
+
+            assert!(result.is_ok());
+            let content = result.unwrap();
+            assert!(content == "Content of file1\n" || content == "Content of file2\n");
+        }
+
+        /// test_read_all_files: Tests if the read_all_files function can read all files from a directory.
+        #[test]
+        fn test_read_all_files() {
+            let tmp_dir = setup_test_directory();
+            let result = read_all_files(tmp_dir.path().to_str().unwrap());
+
+            assert!(result.is_ok());
+            let contents = result.unwrap();
+            assert_eq!(contents.len(), 2);
+            assert!(contents.contains(&"Content of file1\n".to_string()));
+            assert!(contents.contains(&"Content of file2\n".to_string()));
+        }
+
+        /// test_pick_file_invalid_dir: Tests the error handling of pick_file when given an invalid directory.
+        #[test]
+        fn test_pick_file_invalid_dir() {
+            let result = pick_file("invalid_directory".to_string());
+            assert!(result.is_err());
+        }
+
+        /// test_read_all_files_invalid_dir: Tests the error handling of read_all_files when given an invalid directory.
+        #[test]
+        fn test_read_all_files_invalid_dir() {
+            let result = read_all_files("invalid_directory");
+            assert!(result.is_err());
+        }
+    }
 }
