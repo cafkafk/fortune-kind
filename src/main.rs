@@ -179,13 +179,41 @@ pub mod random {
 }
 
 pub mod fortunes {
+    //! A module for retrieving random quotes (or fortunes).
     use crate::file;
     use crate::random;
 
     use std::process::exit;
 
+    /// The default maximum length for a short quote.
     const SHORT: usize = 150;
 
+    /// Retrieves and prints a random quote from the "fortunes" file based on the specified size.
+    ///
+    /// The function divides the file content into quotes using the "\n%\n" delimiter.
+    /// Depending on the `quote_size` parameter, the function will either print a quote of a specific length
+    /// or a completely random one.
+    ///
+    /// # Arguments
+    ///
+    /// * `quote_size` - A reference to a byte that determines the size of the quote to retrieve.
+    ///   - `1`: Default size (up to 150 characters).
+    ///   - `2-254`: Reduces the target length by half for each increment.
+    ///   - `255`: Prints a humorous message and exits.
+    ///   - `0` or any other value: Retrieves a completely random quote.
+    ///
+    /// # Panics
+    ///
+    /// This function will panic if it fails to pick a file from the "fortunes" directory.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use your_crate_name::fortunes::get_quote;
+    ///
+    /// get_quote(&1); // Retrieves a quote of default size.
+    /// get_quote(&255); // Prints a humorous message and exits.
+    /// ```
     pub fn get_quote(quote_size: &u8) {
         let file = file::pick_file("fortunes".to_string()).unwrap();
         let quotes: Vec<&str> = file.split("\n%\n").collect();
