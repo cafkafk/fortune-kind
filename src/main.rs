@@ -141,9 +141,9 @@ fn main() -> io::Result<()> {
         .get_matches();
 
     if let Some(short) = matches.get_one::<u8>("short") {
-        fortunes::get_quote(&short);
+        fortune::get_quote(&short);
     } else {
-        fortunes::get_quote(&0);
+        fortune::get_quote(&0);
     }
 
     Ok(())
@@ -178,8 +178,8 @@ pub mod random {
     }
 }
 
-pub mod fortunes {
-    //! A module for retrieving random quotes (or fortunes).
+pub mod fortune {
+    //! A module for retrieving random quotes (or fortune).
     use crate::file;
     use crate::random;
 
@@ -188,7 +188,7 @@ pub mod fortunes {
     /// The default maximum length for a short quote.
     const SHORT: usize = 150;
 
-    /// Retrieves and prints a random quote from the "fortunes" file based on the specified size.
+    /// Retrieves and prints a random quote from the "fortune" file based on the specified size.
     ///
     /// The function divides the file content into quotes using the "\n%\n" delimiter.
     /// Depending on the `quote_size` parameter, the function will either print a quote of a specific length
@@ -204,12 +204,12 @@ pub mod fortunes {
     ///
     /// # Panics
     ///
-    /// This function will panic if it fails to pick a file from the "fortunes" directory.
+    /// This function will panic if it fails to pick a file from the "fortune" directory.
     ///
     /// # Examples
     ///
     /// ```
-    /// use your_crate_name::fortunes::get_quote;
+    /// use your_crate_name::fortune::get_quote;
     ///
     /// get_quote(&1); // Retrieves a quote of default size.
     /// get_quote(&255); // Prints a humorous message and exits.
