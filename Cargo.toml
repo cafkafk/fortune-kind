@@ -16,4 +16,6 @@ grep-matcher = "0.1.6"
 grep-regex = "0.1.11"
 grep-searcher = "0.1.11"
 rand = "0.8.5"
+
+[dev-dependencies]
 tempfile = "3.8.0"
