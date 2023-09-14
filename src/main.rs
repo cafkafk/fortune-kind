@@ -1,11 +1,6 @@
 use clap::{arg, command, crate_authors, Arg};
-use rand::thread_rng;
-use rand::Rng;
 use std::env;
 use std::io;
-use std::process::exit;
-
-const SHORT: usize = 150;
 
 pub mod search {
     //! A module for searching patterns within strings using regular expressions.
@@ -110,6 +105,11 @@ pub mod search {
 }
 
 fn main() -> io::Result<()> {
+    // let files = file::read_all_files("fortunes").unwrap();
+    // for file in files {
+    //     let matches = search::search_string(file.as_bytes(), r"nurture").unwrap();
+    //     println!("{:#?}", matches);
+    // }
     let matches = command!()
         .author(crate_authors!("\n"))
         .arg(
@@ -141,50 +141,64 @@ fn main() -> io::Result<()> {
         .get_matches();
 
     if let Some(short) = matches.get_one::<u8>("short") {
-        get_quote(&short);
+        fortunes::get_quote(&short);
     } else {
-        get_quote(&0);
+        fortunes::get_quote(&0);
     }
 
     Ok(())
 }
 
-fn random(i: usize) -> usize {
-    let mut rng = thread_rng();
-    rng.gen_range(0..i)
+pub mod random {
+    use rand::thread_rng;
+    use rand::Rng;
+
+    pub fn random(i: usize) -> usize {
+        let mut rng = thread_rng();
+        rng.gen_range(0..i)
+    }
 }
 
-fn get_quote(quote_size: &u8) {
-    let file = file::pick_file("fortunes".to_string()).unwrap();
-    let quotes: Vec<&str> = file.split("\n%\n").collect();
+pub mod fortunes {
+    use crate::file;
+    use crate::random;
 
-    let mut tmp = vec![];
+    use std::process::exit;
 
-    match quote_size {
-        n if n > &0 => {
-            let mut target_length: usize = SHORT;
-            if *n != 1 {
-                for _ in 1..*n {
-                    target_length /= 2;
+    const SHORT: usize = 150;
+
+    pub fn get_quote(quote_size: &u8) {
+        let file = file::pick_file("fortunes".to_string()).unwrap();
+        let quotes: Vec<&str> = file.split("\n%\n").collect();
+
+        let mut tmp = vec![];
+
+        match quote_size {
+            n if n > &0 => {
+                let mut target_length: usize = SHORT;
+                if *n != 1 {
+                    for _ in 1..*n {
+                        target_length /= 2;
+                    }
                 }
-            }
-            if *n == 255 as u8 {
-                println!("WE GET IT, YOU WANT A SHORT FORTUNE");
-                exit(0);
-            }
-            if target_length < 1 {
-                target_length = 1;
-            }
-            println!("{n}");
-            for q in &quotes {
-                if q.len() <= target_length {
-                    tmp.push(q)
+                if *n == 255 as u8 {
+                    println!("WE GET IT, YOU WANT A SHORT FORTUNE");
+                    exit(0);
                 }
+                if target_length < 1 {
+                    target_length = 1;
+                }
+                println!("{n}");
+                for q in &quotes {
+                    if q.len() <= target_length {
+                        tmp.push(q)
+                    }
+                }
+                println!("{}", tmp[random::random(tmp.len())]);
             }
-            println!("{}", tmp[random(tmp.len())]);
-        }
-        _ => {
-            println!("{}", quotes[random(quotes.len() - 1)]);
+            _ => {
+                println!("{}", quotes[random::random(quotes.len() - 1)]);
+            }
         }
     }
 }
