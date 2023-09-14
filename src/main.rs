@@ -248,6 +248,32 @@ pub mod fortune {
             }
         }
     }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use assert_cmd::Command;
+
+        /// Tests the behavior of `get_quote` when the default size (1) is provided.
+        /// It ensures that the output quote is within the expected length.
+        #[test]
+        fn test_get_quote_default_size() {
+            let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
+            cmd.arg("-s");
+            let output = cmd.output().unwrap();
+            assert!(output.stdout.len() <= SHORT as usize);
+        }
+
+        /// Tests the behavior of `get_quote` when the humorous message trigger (255) is provided.
+        /// It ensures that the output matches the expected humorous message.
+        #[test]
+        fn test_get_quote_humorous_message() {
+            let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
+            cmd.arg(format!("-{}", String::from("s").repeat(255)));
+            let output = cmd.output().unwrap();
+            assert_eq!(output.stdout, b"WE GET IT, YOU WANT A SHORT FORTUNE\n");
+        }
+    }
 }
 
 pub mod file {
