@@ -150,9 +150,28 @@ fn main() -> io::Result<()> {
 }
 
 pub mod random {
+    //! A module for generating random numbers.
     use rand::thread_rng;
     use rand::Rng;
 
+    /// Generates a random number between 0 (inclusive) and the given upper bound (exclusive).
+    ///
+    /// # Arguments
+    ///
+    /// * `i` - The upper bound for the random number generation. The generated number will be in the range [0, i).
+    ///
+    /// # Returns
+    ///
+    /// A random `usize` number between 0 (inclusive) and `i` (exclusive).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use your_crate_name::random::random;
+    ///
+    /// let num = random(10);
+    /// assert!(num < 10);
+    /// ```
     pub fn random(i: usize) -> usize {
         let mut rng = thread_rng();
         rng.gen_range(0..i)
