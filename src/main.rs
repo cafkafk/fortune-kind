@@ -105,11 +105,6 @@ pub mod search {
 }
 
 fn main() -> io::Result<()> {
-    // let files = file::read_all_files("fortunes").unwrap();
-    // for file in files {
-    //     let matches = search::search_string(file.as_bytes(), r"nurture").unwrap();
-    //     println!("{:#?}", matches);
-    // }
     let matches = command!()
         .author(crate_authors!("\n"))
         .arg(
@@ -129,6 +124,7 @@ fn main() -> io::Result<()> {
             Arg::new("find")
                 .short('m')
                 .long("find")
+                .value_name("pattern")
                 .help("Finds fortunes matching regex query."),
         )
         .arg(
@@ -140,7 +136,9 @@ fn main() -> io::Result<()> {
         .arg(arg!(-s --short ... "Shows a short aporism."))
         .get_matches();
 
-    if let Some(short) = matches.get_one::<u8>("short") {
+    if let Some(pattern) = matches.get_one::<String>("find") {
+        fortune::search_fortunes(&pattern);
+    } else if let Some(short) = matches.get_one::<u8>("short") {
         fortune::get_quote(&short);
     } else {
         fortune::get_quote(&0);
@@ -211,11 +209,20 @@ pub mod fortune {
     //! A module for retrieving random quotes (or fortune).
     use crate::file;
     use crate::random;
+    use crate::search;
 
     use std::process::exit;
 
     /// The default maximum length for a short quote.
     const SHORT: usize = 150;
+
+    pub fn search_fortunes(pattern: &str) {
+        let files = file::read_all_files("fortunes").unwrap();
+        for file in files {
+            let matches = search::search_string(file.as_bytes(), pattern).unwrap();
+            println!("{:#?}", matches);
+        }
+    }
 
     /// Retrieves and prints a random quote from the "fortune" file based on the specified size.
     ///
