@@ -176,6 +176,35 @@ pub mod random {
         let mut rng = thread_rng();
         rng.gen_range(0..i)
     }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        /// Tests that the `random` function generates a number within the expected range.
+        #[test]
+        fn test_random_within_range() {
+            for _ in 0..1000 {
+                let upper_bound = 10;
+                let num = random(upper_bound);
+                assert!(num < upper_bound);
+            }
+        }
+
+        /// Tests that the `random` function generates a number of 0 when the upper bound is 1.
+        #[test]
+        fn test_random_upper_bound_one() {
+            let num = random(1);
+            assert_eq!(num, 0);
+        }
+
+        /// Tests that the `random` function panics when the upper bound is 0.
+        #[test]
+        #[should_panic(expected = "cannot sample empty range")]
+        fn test_random_upper_bound_zero() {
+            random(0);
+        }
+    }
 }
 
 pub mod fortune {
