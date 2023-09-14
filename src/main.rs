@@ -11,6 +11,7 @@ pub mod search {
     use grep_searcher::sinks::UTF8;
     use grep_searcher::Searcher;
 
+    // TODO: REMOVE THIS
     const SHERLOCK: &'static [u8] = b"\
     For the Doctor Watsons of this world, as opposed to the Sherlock
     Holmeses, success in the province of detective work must always
@@ -20,6 +21,7 @@ pub mod search {
     and exhibited clearly, with a label attached.
     ";
 
+    // TODO: REMOVE THIS
     pub fn example() -> Result<String, Box<dyn Error>> {
         let matcher = RegexMatcher::new(r"Doctor \w+")?;
         let mut matches: Vec<(u64, String)> = vec![];
