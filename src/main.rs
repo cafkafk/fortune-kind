@@ -116,7 +116,7 @@ pub mod fortune {
     pub fn search_fortunes(pattern: &str) {
         let files = file::read_all_files("fortunes").unwrap();
         for file in files {
-            let fortune: Option<&str> = file.split("\n%\n").filter(|x| x.contains(pattern)).next();
+            let fortune: Option<&str> = file.split("\n%\n").find(|x| x.contains(pattern));
             if let Some(fortune) = fortune {
                 println!("{}\n%", fortune);
             }
