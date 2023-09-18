@@ -118,7 +118,7 @@ pub mod fortune {
         for file in files {
             let fortune: Option<&str> = file.split("\n%\n").filter(|x| x.contains(pattern)).next();
             if let Some(fortune) = fortune {
-                println!("{}\n%", fortune.to_string());
+                println!("{}\n%", fortune);
             }
         }
     }
@@ -240,7 +240,6 @@ pub mod file {
     pub fn pick_file(dir: String) -> Result<String, Box<dyn std::error::Error>> {
         let mut rng = rand::thread_rng();
         let files: Vec<_> = fs::read_dir(dir)?.collect();
-        // println!("{:#?files}");
         let file = files.choose(&mut rng).ok_or("No files found")?;
         let path = file.as_ref().unwrap().path();
 
