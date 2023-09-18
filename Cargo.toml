@@ -10,7 +10,7 @@ license = "GPL-3.0-only"
 version = "0.1.0"
 
 [dependencies]
-clap = { version = "4.3.23", features = ["cargo"] }
+clap = { version = "4.4.4", features = ["cargo"] }
 grep = "0.2.12"
 grep-matcher = "0.1.6"
 grep-regex = "0.1.11"
