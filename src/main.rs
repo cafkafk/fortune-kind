@@ -35,9 +35,9 @@ fn main() -> io::Result<()> {
         .get_matches();
 
     if let Some(pattern) = matches.get_one::<String>("find") {
-        fortune::search_fortunes(&pattern);
+        fortune::search_fortunes(pattern);
     } else if let Some(short) = matches.get_one::<u8>("short") {
-        fortune::get_quote(&short);
+        fortune::get_quote(short);
     } else {
         fortune::get_quote(&0);
     }
@@ -163,7 +163,7 @@ pub mod fortune {
                         target_length /= 2;
                     }
                 }
-                if *n == 255 as u8 {
+                if *n == 255_u8 {
                     println!("WE GET IT, YOU WANT A SHORT FORTUNE");
                     exit(0);
                 }
