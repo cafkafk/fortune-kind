@@ -221,8 +221,10 @@ pub mod fortune {
     pub fn search_fortunes(pattern: &str) {
         let files = file::read_all_files("fortunes").unwrap();
         for file in files {
-            let matches = search::search_string(file.as_bytes(), pattern).unwrap();
-            println!("{:#?}", matches);
+            let fortune: Option<&str> = file.split("\n%\n").filter(|x| x.contains(pattern)).next();
+            if let Some(fortune) = fortune {
+                println!("{}\n%", fortune.to_string());
+            }
         }
     }
 
