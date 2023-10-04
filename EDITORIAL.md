@@ -85,3 +85,24 @@ go.
   found it or seek confirmation of its placement in your pull request.
 - Does this fortune need a content warning? If it does, we ask you to review
   the "Tricky Topics" section of this document.
+
+## Revision Policy
+
+We value the accuracy and appropriateness of each fortune. If you, as a
+contributor or user, spot something that appears to be a mistake, please follow
+our revision policy:
+
+1. Report the Issue: Submit a issue highlighting the specific fortune in
+   question, its current content, and the perceived mistake. You might also
+   consider submitting a PR directly, but try to avoid doing so for potentially
+   contentious edits.
+
+2. Collaborative Review: Once reported, the fortune will undergo a review by a
+   reviewer or group of reviewers. Comments from users and contributors are
+   welcome, as long as they remain topical. This helps ensures that the matter
+   is assessed from multiple perspectives, as needed.
+
+3. Edit, Move, or Remove: If the reviewer(s) agree that the content is indeed a
+   mistake, it will either be edited for clarity and correctness, moved to the
+   appropriate place, or removed entirely, depending on the nature of the
+   error.
