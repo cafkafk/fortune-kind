@@ -41,7 +41,7 @@ If you don't know (or can't find a trustworthy reference for) the language a for
 
 ### Placement
 
-This document has already touched on where fortunes covering tricky topics should go, but for the sake of organization outside of, we ask contributors to consider these questions when deciding where a fortune should go.
+This document has already touched on where fortunes covering tricky topics should go, but for the sake of organization outside of that scope, we ask contributors to consider these questions when deciding where a fortune should go.
 
 - Does this fortune's topic matter belong in the file you found it in?
 - Does this fortune not belong anywhere, or does it seem to belong in multiple places? If this is the case, it is probably better to leave it where you found it or seek confirmation of its placement in your pull request.
