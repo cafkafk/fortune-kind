@@ -1,4 +1,4 @@
-# Editorial Guidlines
+# Editorial Guidelines
 
 This document is intended to serve as a set of guidelines to help make editorial contributions to this project. Guidelines are not rules, which is to say that there is no penalty for not following one of the provisions from this document. Instead, think of this as a set of best practices for deciding which fortunes to keep, how to organize them, and when to edit a fortune's content.
 
@@ -8,13 +8,11 @@ Historically, contributions to `fortune-mod` have had a less-than ideal quality 
 
 ## Methodology
 
-For the purposes of this project, we would like you to consider the two primary tasks required of contributors interested in sorting through the fortunes from `oldtunes`:
+For the purposes of this project, we would like you to consider the three primary tasks required of contributors interested in sorting through the fortunes from `oldtunes`:
 
-1 moderation: considering the appropriateness of the content 
-2 editing: considering the correctness of the content
-3 placement: considering where a fortune should go
-
-In general, contributors to this project are asked to use their best judgment when sorting through fortunes in `oldtunes`. For the sake of clarity, what follows are more details about the three aforementioned criteria.
+1. moderation: considering the appropriateness of the content 
+2. editing: considering the correctness of the content
+3. placement: considering where a fortune should go
 
 ### Moderation
 
@@ -48,4 +46,3 @@ This document has already touched on where fortunes covering tricky topics shoul
 - Does this fortune's topic matter belong in the file you found it in?
 - Does this fortune not belong anywhere, or does it seem to belong in multiple places? If this is the case, it is probably better to leave it where you found it or seek confirmation of its placement in your pull request.
 - Does this fortune need a content warning? If it does, we ask you to review the "Tricky Topics" section of this document.
-
