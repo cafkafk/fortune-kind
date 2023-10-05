@@ -18,25 +18,35 @@ A fortune rewrite in rust, without the contentious garbage.
 
 ![Usage GIF](out.gif)
 
-> **Note**
+> **Note** 
 > This software is under active development. It's a great time to contribute!
 
 ## Installation
 
 To install the crate:
 
-```bash
-cargo install fortune-kind
-```
-
-## Contributing
-
-We welcome contributions! If you find any issues or have suggestions, please open an issue. If you'd like to contribute directly, feel free to open a pull request.
+```cargo install fortune-kind```
 
 ## Motivation
 
-Many distributions have faced challenges with `fortune-mod` due to concerns about its maintainer and the presence of contentious fortunes in its data files. Instead of trying to replace `fortune-mod` or recreate a historically accurate fortune program, our goal is to serve those who value handpicked, randomly generated fortunes.
+Many distributions have faced challenges with `fortune-mod` due to concerns
+about its maintainer and the presence of contentious fortunes in its data
+files. Instead of trying to replace `fortune-mod` or recreate a historically
+accurate fortune program, our goal is to serve those who value handpicked,
+randomly generated fortunes.
 
-## Fortune Acceptance Process
+## Contributing
 
-We manually integrate fortunes from `fortune-mod`, moving them from the `oldtunes` directory to the `fortunes` directory. Each fortune undergoes a rigorous manual verification process. While the selection criteria can be a topic of discussion, the final say rests with cafkafk's judgment.
+We welcome contributions! If you find any issues or have suggestions, please
+open an issue. If you'd like to contribute directly, feel free to open a pull
+request.
+
+### Fortune Acceptance Process
+
+We manually integrate fortunes from `fortune-mod`, moving them from the
+`oldtunes` directory to the `fortunes` directory. Each fortune undergoes a
+rigorous manual verification process. While the selection criteria can be a
+topic of discussion, the final say rests with cafkafk's judgment.
+
+For more info about contributing and the acceptance policy, please see
+[EDITORIAL.md](https://github.com/cafkafk/fortune-kind/blob/main/EDITORIAL.md)
