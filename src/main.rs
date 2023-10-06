@@ -159,7 +159,7 @@ pub mod fortune {
     /// get_quote(&255); // Prints a humorous message and exits.
     /// ```
     pub fn get_quote(quote_size: &u8) {
-        let fortunes_dir = match env::var("FORTUNE_DIR") {
+        let fortune_dir = match env::var("FORTUNE_DIR") {
             Ok(val) => val,
             Err(_) => FORTUNE_DIR.to_string(),
         };
@@ -167,14 +167,14 @@ pub mod fortune {
         // FIXME: mom... I'm not feeling so good...
         // please refactor me mother!
         use std::io::ErrorKind;
-        let file = match file::pick_file(fortunes_dir.clone()) {
+        let file = match file::pick_file(fortune_dir.clone()) {
             Ok(val) => val,
             Err(e) => {
                 if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
                     match io_err {
                         err if io_err.kind() == ErrorKind::NotFound => {
                             eprintln!("{io_err}");
-                            println!("Couldn't find \"{fortunes_dir}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{fortunes_dir}\".",);
+                            println!("Couldn't find \"{fortune_dir}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{fortune_dir}\".",);
                             std::process::exit(1);
                         }
                         &_ => todo!(),
