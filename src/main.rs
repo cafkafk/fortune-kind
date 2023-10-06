@@ -108,13 +108,22 @@ pub mod fortune {
     use crate::file;
     use crate::random;
 
+    use std::env;
     use std::process::exit;
 
     /// The default maximum length for a short quote.
     const SHORT: usize = 150;
 
+    /// The default place to look for fortunes
+    const FORTUNE_DIR: &str = "fortunes";
+
+    /// The default place to look for off-color fortunes
+    const FORTUNE_OFF_DIR: &str = "fortunes_off";
+
     pub fn search_fortunes(pattern: &str) {
-        let files = file::read_all_files("fortunes").unwrap();
+        // TODO: use env var
+
+        let files = file::read_all_files(&FORTUNE_DIR).unwrap();
         for file in files {
             let fortune: Option<&str> = file.split("\n%\n").find(|x| x.contains(pattern));
             if let Some(fortune) = fortune {
@@ -150,7 +159,30 @@ pub mod fortune {
     /// get_quote(&255); // Prints a humorous message and exits.
     /// ```
     pub fn get_quote(quote_size: &u8) {
-        let file = file::pick_file("fortunes".to_string()).unwrap();
+        let fortunes_dir = match env::var("FORTUNE_DIR") {
+            Ok(val) => val,
+            Err(_) => FORTUNE_DIR.to_string(),
+        };
+
+        // FIXME: mom... I'm not feeling so good...
+        // please refactor me mother!
+        use std::io::ErrorKind;
+        let file = match file::pick_file(fortunes_dir.clone()) {
+            Ok(val) => val,
+            Err(e) => {
+                if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
+                    match io_err {
+                        err if io_err.kind() == ErrorKind::NotFound => {
+                            eprintln!("{io_err}");
+                            println!("Couldn't find \"{fortunes_dir}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{fortunes_dir}\".",);
+                            std::process::exit(1);
+                        }
+                        &_ => todo!(),
+                    }
+                }
+                panic!("{e:?}")
+            }
+        };
         let quotes: Vec<&str> = file.split("\n%\n").collect();
 
         let mut tmp = vec![];
