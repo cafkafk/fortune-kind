@@ -173,7 +173,7 @@ pub mod fortune {
                 if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
                     match io_err {
                         err if io_err.kind() == ErrorKind::NotFound => {
-                            eprintln!("{io_err}");
+                            eprintln!("{err}");
                             println!("Couldn't find \"{fortune_dir}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{fortune_dir}\".",);
                             std::process::exit(1);
                         }
