@@ -120,10 +120,25 @@ pub mod fortune {
     /// The default place to look for off-color fortunes
     const FORTUNE_OFF_DIR: &str = "fortunes_off";
 
-    pub fn search_fortunes(pattern: &str) {
-        // TODO: use env var
+    fn get_fortune_dir() -> String {
+        match env::var("FORTUNE_DIR") {
+            Ok(val) => val,
+            Err(_) => FORTUNE_DIR.to_string(),
+        }
+    }
 
-        let files = file::read_all_files(&FORTUNE_DIR).unwrap();
+    fn get_fortune_off_dir() -> String {
+        match env::var("FORTUNE_OFF_DIR") {
+            Ok(val) => val,
+            Err(_) => FORTUNE_OFF_DIR.to_string(),
+        }
+    }
+
+    pub fn search_fortunes(pattern: &str) {
+        let fortune_dir = get_fortune_dir();
+
+        // TODO: Handle your errors!
+        let files = file::read_all_files(&fortune_dir).unwrap();
         for file in files {
             let fortune: Option<&str> = file.split("\n%\n").find(|x| x.contains(pattern));
             if let Some(fortune) = fortune {
@@ -159,10 +174,7 @@ pub mod fortune {
     /// get_quote(&255); // Prints a humorous message and exits.
     /// ```
     pub fn get_quote(quote_size: &u8) {
-        let fortune_dir = match env::var("FORTUNE_DIR") {
-            Ok(val) => val,
-            Err(_) => FORTUNE_DIR.to_string(),
-        };
+        let fortune_dir = get_fortune_dir();
 
         // FIXME: mom... I'm not feeling so good...
         // please refactor me mother!
