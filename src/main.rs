@@ -177,7 +177,7 @@ pub mod fortune {
                             println!("Couldn't find \"{fortune_dir}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{fortune_dir}\".",);
                             std::process::exit(1);
                         }
-                        &_ => todo!(),
+                        &_ => panic!("{e:?}"),
                     }
                 }
                 panic!("{e:?}")
