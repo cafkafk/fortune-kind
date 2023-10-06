@@ -134,6 +134,30 @@ pub mod fortune {
         }
     }
 
+    // TODO: refactor
+    fn handle_file_errors(
+        input: String,
+        f: &dyn Fn(String) -> Result<String, Box<dyn std::error::Error>>,
+    ) -> String {
+        use std::io::ErrorKind;
+        match f(input.clone()) {
+            Ok(val) => val,
+            Err(e) => {
+                if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
+                    match io_err {
+                        err if io_err.kind() == ErrorKind::NotFound => {
+                            eprintln!("{err}");
+                            println!("Couldn't find \"{input}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{input}\".",);
+                            std::process::exit(1);
+                        }
+                        &_ => panic!("{e:?}"),
+                    }
+                }
+                panic!("{e:?}")
+            }
+        }
+    }
+
     pub fn search_fortunes(pattern: &str) {
         let fortune_dir = get_fortune_dir();
 
@@ -174,35 +198,9 @@ pub mod fortune {
     /// get_quote(&255); // Prints a humorous message and exits.
     /// ```
     pub fn get_quote(quote_size: &u8) {
-        use std::io::ErrorKind;
-
         let fortune_dir = get_fortune_dir();
 
-        // FIXME: mom... I'm not feeling so good...
-        // please refactor me mother!
-        fn handle_errors(
-            input: String,
-            f: &dyn Fn(String) -> Result<String, Box<dyn std::error::Error>>,
-        ) -> String {
-            match f(input.clone()) {
-                Ok(val) => val,
-                Err(e) => {
-                    if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
-                        match io_err {
-                            err if io_err.kind() == ErrorKind::NotFound => {
-                                eprintln!("{err}");
-                                println!("Couldn't find \"{input}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{input}\".",);
-                                std::process::exit(1);
-                            }
-                            &_ => panic!("{e:?}"),
-                        }
-                    }
-                    panic!("{e:?}")
-                }
-            }
-        }
-
-        let file = handle_errors(fortune_dir, &file::pick_file);
+        let file = handle_file_errors(fortune_dir, &file::pick_file);
 
         let quotes: Vec<&str> = file.split("\n%\n").collect();
 
