@@ -1,9 +1,9 @@
-use clap::{arg, command, crate_authors, Arg};
+use clap::{Command, arg, command, crate_authors, Arg};
 use std::env;
 use std::io;
 
-fn main() -> io::Result<()> {
-    let matches = command!()
+pub fn build_cli() -> Command {
+    command!()
         .author(crate_authors!("\n"))
         .arg(
             Arg::new("all")
@@ -32,8 +32,10 @@ fn main() -> io::Result<()> {
                 .help("Finds a fortune that is shorter than provided number."),
         )
         .arg(arg!(-s --short ... "Shows a short aporism."))
-        .get_matches();
+}
 
+fn main() -> io::Result<()> {
+    let matches = build_cli().get_matches();
     if let Some(pattern) = matches.get_one::<String>("find") {
         fortune::search_fortunes(pattern);
     } else if let Some(short) = matches.get_one::<u8>("short") {
