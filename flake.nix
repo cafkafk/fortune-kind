@@ -76,21 +76,37 @@
           check = naersk'.buildPackage {
             src = ./.;
             mode = "check";
+            singleStep = true;
             inherit buildInputs;
+
+            preBuild = ''
+              mkdir -p "./man";
+            '';
+
           };
 
           # Run `nix build .#test` to run tests
           test = naersk'.buildPackage {
             src = ./.;
             mode = "test";
+            singleStep = true;
             inherit buildInputs;
+
+            preBuild = ''
+              mkdir -p "./man";
+            '';
           };
 
           # Run `nix build .#clippy` to lint code
           clippy = naersk'.buildPackage {
             src = ./.;
             mode = "clippy";
+            singleStep = true;
             inherit buildInputs;
+
+            preBuild = ''
+              mkdir -p "./man";
+            '';
           };
         };
 
