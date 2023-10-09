@@ -36,7 +36,7 @@ If you want to pass arguments this way, use e.g. `nix run github:cafkafk/fortune
 ### Nix/NixOS ❄️
 
 
-> **Note**
+> **Warning**
 > Installing packages imperatively isn't idiomatic Nix, as this can lead to [many issues](https://stop-using-nix-env.privatevoid.net/).
 
 *Imparative Installation*
@@ -72,7 +72,7 @@ Then, add it to your `systemPackages` wherever you prefer:
 <details>
     <summary> Installing From crates.io </summary>
 
-> **Warning**
+> **Important**
 > Installing from crates.io won't set a `FORTUNE_DIR`
 
 To install the crate:
