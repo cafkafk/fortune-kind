@@ -80,8 +80,7 @@ To install the crate:
 Many distributions have faced challenges with `fortune-mod` due to concerns
 about its maintainer and the presence of contentious fortunes in its data
 files. Instead of trying to replace `fortune-mod` or recreate a historically
-accurate fortune program, our goal is to serve those who value handpicked,
-randomly generated fortunes.
+accurate fortune program, our goal is to serve those who value handpicked fortunes.
 
 ## Contributing
 
