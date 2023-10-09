@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.3] - 2023-10-09
+
+### Bug Fixes
+
+- Fix gitignore
+- Fix gitignore further
+- Fix build, phew :p
+
+### Documentation
+
+- Update flake description
+
+### Testing
+
+- Fix tests in ci
+
 ## [0.1.2] - 2023-10-09
 
 ### Documentation
@@ -20,6 +36,10 @@
 - Automatic manpage generation
 - Gen/install manpages, completion
 - Auto-install shell completions, man pages
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.2
 
 ### Refactor
 
