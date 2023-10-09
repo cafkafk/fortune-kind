@@ -6,7 +6,7 @@ categories = ["command-line-utilities"]
 edition = "2021"
 # Files to be excluded on `cargo publish`
 exclude = [ "/oldtunes" ]
-rust-version = "1.65.0"
+rust-version = "1.70.0"
 readme = "README.md"
 license = "GPL-3.0-only"
 version = "0.1.1"

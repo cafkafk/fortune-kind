@@ -96,7 +96,7 @@
 
         # For `nix develop`:
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [toolchain just pandoc vhs];
+          nativeBuildInputs = with pkgs; [rustup toolchain just zip];
         };
 
         # for `nix flake check`
