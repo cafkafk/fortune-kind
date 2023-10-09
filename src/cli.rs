@@ -1,4 +1,4 @@
-use clap::{Command, arg, command, crate_authors, Arg};
+use clap::{arg, command, crate_authors, Arg, Command};
 
 pub fn build_cli() -> Command {
     command!()

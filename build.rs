@@ -1,4 +1,5 @@
-use clap_complete::{generate_to, shells::Bash};
+use clap::ValueEnum;
+use clap_complete::{generate_to, Shell};
 use std::env;
 use std::io::Error;
 
@@ -11,14 +12,11 @@ fn main() -> Result<(), Error> {
     };
 
     let mut cmd = build_cli();
-    let path = generate_to(
-        Bash,
-        &mut cmd, // We need to specify what generator to use
-        "fortune-kind",  // We need to specify the bin name manually
-        outdir,   // We need to specify where to write to
-    )?;
+    for &shell in Shell::value_variants() {
+        generate_to(shell, &mut cmd, "fortune-mod", &outdir)?;
+    }
 
-    println!("cargo:warning=completion file is generated: {path:?}");
+    println!("cargo:warning=completion file is generated: {outdir:?}");
 
     Ok(())
 }

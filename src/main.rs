@@ -1,5 +1,3 @@
-use clap::{Command, arg, command, crate_authors, Arg};
-use std::env;
 use std::io;
 
 mod cli;
@@ -91,6 +89,7 @@ pub mod fortune {
     const FORTUNE_DIR: &str = "fortunes";
 
     /// The default place to look for off-color fortunes
+    #[allow(dead_code)] // TODO: remove
     const FORTUNE_OFF_DIR: &str = "fortunes_off";
 
     fn get_fortune_dir() -> String {
@@ -100,6 +99,7 @@ pub mod fortune {
         }
     }
 
+    #[allow(dead_code)] // TODO: remove
     fn get_fortune_off_dir() -> String {
         match env::var("FORTUNE_OFF_DIR") {
             Ok(val) => val,
