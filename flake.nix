@@ -51,6 +51,12 @@
             nativeBuildInputs = with pkgs; [makeWrapper];
 
             preInstall = ''
+              installManPage man/fortune-kind.1
+              installShellCompletion \
+                --bash man/fortune-mod.bash
+                --zsh  man/_fortune-mod
+                --fish man/fortune-mod.fish
+              pwd
               mkdir -p $out
               cp -r $fortunes $out/fortunes;
             '';
