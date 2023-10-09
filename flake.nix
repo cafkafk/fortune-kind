@@ -105,8 +105,7 @@
         checks = {
           formatting = treefmtEval.config.build.check self;
           build = packages.check;
-          # FIXME: broken for some reason:
-          # test = packages.test;
+          test = packages.test;
           lint = packages.clippy;
         };
       }
