@@ -2,7 +2,6 @@ use clap::ValueEnum;
 use clap_complete::{generate_to, Shell};
 use clap_mangen::Man;
 use std::env;
-use std::ffi::OsString;
 use std::fs::File;
 use std::io::Error;
 use std::path::PathBuf;
@@ -10,12 +9,15 @@ use std::path::PathBuf;
 include!("src/cli.rs");
 
 fn main() -> Result<(), Error> {
-    //let outdir = match env::var_os("OUT_DIR") {
-    //    None => return Ok(()),
-    //    Some(outdir) => outdir,
-    //};
+    let real_outdir = match env::var_os("OUT_DIR") {
+        None => return Ok(()),
+        Some(outdir) => outdir,
+    };
 
-    let outdir = OsString::from("./man");
+    let outdir = match env::var_os("MAN_OUT") {
+        None => real_outdir,
+        Some(outdir) => outdir,
+    };
 
     let mut cmd = build_cli();
     for &shell in Shell::value_variants() {
