@@ -43,8 +43,22 @@
           # For `nix build` & `nix run`:
           default = naersk'.buildPackage {
             src = ./.;
+            fortunes = ./fortunes;
             doCheck = true; # run `cargo test` on build
+            copyBins = true;
             inherit buildInputs;
+
+            nativeBuildInputs = with pkgs; [makeWrapper];
+
+            preInstall = ''
+              mkdir -p $out
+              cp -r $fortunes $out/fortunes;
+            '';
+
+            postInstall = ''
+              wrapProgram $out/bin/fortune-kind \
+                --prefix FORTUNE_DIR : "$out/fortunes"
+            '';
           };
 
           # Run `nix build .#check` to check code
