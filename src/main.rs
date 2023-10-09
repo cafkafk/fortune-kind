@@ -1,38 +1,9 @@
-use clap::{arg, command, crate_authors, Arg};
-use std::env;
 use std::io;
 
+mod cli;
+
 fn main() -> io::Result<()> {
-    let matches = command!()
-        .author(crate_authors!("\n"))
-        .arg(
-            Arg::new("all")
-                .short('a')
-                .long("all")
-                .help("Shows all fortunes, including unkind."),
-        )
-        .arg(
-            Arg::new("unkind")
-                .short('o')
-                .short('u')
-                .long("unkind")
-                .help("Shows only unkind fortunes."),
-        )
-        .arg(
-            Arg::new("find")
-                .short('m')
-                .long("find")
-                .value_name("pattern")
-                .help("Finds fortunes matching regex query."),
-        )
-        .arg(
-            Arg::new("length")
-                .short('n')
-                .long("length")
-                .help("Finds a fortune that is shorter than provided number."),
-        )
-        .arg(arg!(-s --short ... "Shows a short aporism."))
-        .get_matches();
+    let matches = cli::build_cli().get_matches();
 
     if let Some(pattern) = matches.get_one::<String>("find") {
         fortune::search_fortunes(pattern);
@@ -118,6 +89,7 @@ pub mod fortune {
     const FORTUNE_DIR: &str = "fortunes";
 
     /// The default place to look for off-color fortunes
+    #[allow(dead_code)] // TODO: remove
     const FORTUNE_OFF_DIR: &str = "fortunes_off";
 
     fn get_fortune_dir() -> String {
@@ -127,6 +99,7 @@ pub mod fortune {
         }
     }
 
+    #[allow(dead_code)] // TODO: remove
     fn get_fortune_off_dir() -> String {
         match env::var("FORTUNE_OFF_DIR") {
             Ok(val) => val,
