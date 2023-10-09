@@ -2,26 +2,20 @@
 
 # Fortune Kind
 
-Fortune favors the kind! 
-A fortune rewrite in rust, without the contentious garbage.
-
-**README Sections:** [Options](#options) — [Installation](#installation) — [Development](#development)
+![Usage GIF](out.gif)
 
 [![Built with Nix](https://img.shields.io/badge/Built_With-Nix-5277C3.svg?logo=nixos&labelColor=73C3D5)](https://nixos.org)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
-
 [![Unit tests](https://github.com/eza-community/eza/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/eza-community/eza/actions/workflows/unit-tests.yml)
 ![Crates.io](https://img.shields.io/crates/v/fortune-kind?link=https%3A%2F%2Fcrates.io%2Fcrates%2Feza)
 ![Crates.io](https://img.shields.io/crates/l/fortune-kind?link=https%3A%2F%2Fgithub.com%2Fcafkafk%2Feza%2Fblob%2Fmain%2FLICENCE)
 
 </div>
 
-![Usage GIF](out.gif)
-
 > **Note** 
 > This software is under active development. It's a great time to contribute!
 
-### Try it with Nix ❄️
+## Try it with Nix ❄️
 
 If you already have Nix setup with flake support, you can try out `fortune-kind` with the `nix run` command:
 
