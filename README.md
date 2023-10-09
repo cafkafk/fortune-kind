@@ -21,11 +21,65 @@ A fortune rewrite in rust, without the contentious garbage.
 > **Note** 
 > This software is under active development. It's a great time to contribute!
 
+### Try it with Nix ❄️
+
+If you already have Nix setup with flake support, you can try out `fortune-kind` with the `nix run` command:
+
+    nix run github:cafkafk/fortune-kind
+
+Nix will build `fortune-kind` and run it.
+
+If you want to pass arguments this way, use e.g. `nix run github:cafkafk/fortune-kind -- -s`.
+
 ## Installation
+
+### Nix/NixOS ❄️
+
+
+> **Note**
+> Installing packages imperatively isn't idiomatic Nix, as this can lead to [many issues](https://stop-using-nix-env.privatevoid.net/).
+
+*Imparative Installation*
+
+For `nix profile` users:
+
+```shell
+nix profile install github:cafkafk/fortune-kind#
+```
+
+*Declarative Installation*
+
+To add it to your `flake.nix`:
+
+```nix
+{
+...
+    inputs.fortune-kind.url = "github:cafkafk/fortune-kind";
+...
+}
+```
+
+Then, add it to your `systemPackages` wherever you prefer:
+
+```nix
+{ inputs }: {
+  environment.systemPackages = [
+    inputs.fortune-kind.packages.${pkgs.system}.default
+  ];
+}
+```
+
+<details>
+    <summary> Installing From crates.io </summary>
+
+> **Warning**
+> Installing from crates.io won't set a `FORTUNE_DIR`
 
 To install the crate:
 
 ```cargo install fortune-kind```
+
+</details>
 
 ## Motivation
 
