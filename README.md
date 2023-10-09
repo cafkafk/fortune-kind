@@ -33,7 +33,7 @@ If you want to pass arguments this way, use e.g. `nix run github:cafkafk/fortune
 > **Warning**
 > Installing packages imperatively isn't idiomatic Nix, as this can lead to [many issues](https://stop-using-nix-env.privatevoid.net/).
 
-*Imparative Installation*
+##### **Imparative Installation**
 
 For `nix profile` users:
 
@@ -41,7 +41,7 @@ For `nix profile` users:
 nix profile install github:cafkafk/fortune-kind#
 ```
 
-*Declarative Installation*
+##### **Declarative Installation**
 
 To add it to your `flake.nix`:
 
