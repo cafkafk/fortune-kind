@@ -46,17 +46,22 @@
             fortunes = ./fortunes;
             doCheck = true; # run `cargo test` on build
             copyBins = true;
+            copyLibs = true;
+            singleStep = true;
             inherit buildInputs;
 
-            nativeBuildInputs = with pkgs; [makeWrapper];
+            nativeBuildInputs = with pkgs; [makeWrapper installShellFiles];
+
+            preBuild = ''
+              mkdir -p "./man";
+            '';
 
             preInstall = ''
               installManPage man/fortune-kind.1
               installShellCompletion \
-                --bash man/fortune-mod.bash
-                --zsh  man/_fortune-mod
-                --fish man/fortune-mod.fish
-              pwd
+                --fish man/fortune-kind.fish \
+                --bash man/fortune-kind.bash \
+                --zsh  man/_fortune-kind
               mkdir -p $out
               cp -r $fortunes $out/fortunes;
             '';

@@ -10,15 +10,16 @@ use std::path::PathBuf;
 include!("src/cli.rs");
 
 fn main() -> Result<(), Error> {
-    // let outdir = match env::var_os("OUT_DIR") {
-    //     None => return Ok(()),
-    //     Some(outdir) => outdir,
-    // };
+    //let outdir = match env::var_os("OUT_DIR") {
+    //    None => return Ok(()),
+    //    Some(outdir) => outdir,
+    //};
+
     let outdir = OsString::from("./man");
 
     let mut cmd = build_cli();
     for &shell in Shell::value_variants() {
-        generate_to(shell, &mut cmd, "fortune-mod", &outdir)?;
+        generate_to(shell, &mut cmd, "fortune-kind", &outdir)?;
     }
 
     let file = PathBuf::from(&outdir).join("fortune-kind.1");
