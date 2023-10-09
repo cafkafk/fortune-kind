@@ -1,5 +1,5 @@
 {
-  description = "The fortune-kind flake for developing and releasing (soon)";
+  description = "fortune-kind: A new kinda fortune.";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
