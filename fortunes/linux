@@ -228,3 +228,22 @@ first programs in any other language (maybe except for fortran, but then
 I suspect all fortran programs look like `firsts')
 	-- Olaf Kirch
 %
+On a normal ascii line, the only safe condition to detect is a 'BREAK'
+- everything else having been assigned functions by Gnu EMACS.
+	-- Tarl Neustaedter
+%
+By golly, I'm beginning to think Linux really *is* the best thing since
+sliced bread.
+	-- Vance Petree, Virginia Power
+%
+I'd crawl over an acre of 'Visual This++' and 'Integrated Development
+That' to get to gcc, Emacs, and gdb.  Thank you.
+	-- Vance Petree, Virginia Power
+%
+Oh, I've seen copies [of Linux Journal] around the terminal room at The Labs.
+	-- Dennis Ritchie
+%
+If you want to travel around the world and be invited to speak at a lot
+of different places, just write a Unix operating system.
+	-- Linus Torvalds
+%
