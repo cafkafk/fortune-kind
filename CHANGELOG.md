@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.1.4] - 2023-10-12
+
+### Bug Fixes
+
+- Removed inaccurate fortune
+- Remove unnescesarry joke
+- Removed confucious inside fortune cookie due to request
+- Remove homophobic fortune
+- Add progress marker
+
+### Features
+
+- Transfer a few goedel tunes
+- Port more tunes
+- Finish porting goedel
+- Start porting disclaimer
+- Port more disclaimers
+- Finish porting disclaimer
+- Start porting
+- Removed fortuens I weren't sure about
+- Port more news
+- Port all of magic
+- Begin porting linux
+- OH and added
+- Add more fortunes
+- Port more fortunes
+- Begin porting kids
+- Add fortunes from fedi
+
+### Refactor
+
+- Move random to own file
+- Move out to own file
+- Move to own file
+
+### Build
+
+- Update flake.lock
+
+### Ci
+
+- Create flakehub-publish-tagged.yml
+
 ## [0.1.3] - 2023-10-09
 
 ### Bug Fixes
@@ -11,6 +54,10 @@
 ### Documentation
 
 - Update flake description
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.3
 
 ### Testing
 
