@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.5] - 2023-10-19
+
+### Features
+
+- Add a fortune
+- Add more fortunes
+- Add nethack sounds
+- Start porting debian
+
+### Build
+
+- Bump actions/checkout from 3 to 4
+- Bump DeterminateSystems/nix-installer-action from 5 to 6
+
 ## [0.1.4] - 2023-10-12
 
 ### Bug Fixes
@@ -28,6 +42,10 @@
 - Port more fortunes
 - Begin porting kids
 - Add fortunes from fedi
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.4
 
 ### Refactor
 
