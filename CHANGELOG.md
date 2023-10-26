@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.6] - 2023-10-26
+
+### Features
+
+- Start porting food
+- Add some fedi tune
+- Begin porting humorists
+
+### Miscellaneous Tasks
+
+- Update all dependencies
+
 ## [0.1.5] - 2023-10-19
 
 ### Features
@@ -8,6 +20,10 @@
 - Add more fortunes
 - Add nethack sounds
 - Start porting debian
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.5
 
 ### Build
 
