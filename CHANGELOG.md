@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.7] - 2023-11-02
+
+### Bug Fixes
+
+- Remove fortune I'm unsure about
+
+### Features
+
+- Port 241 lines of medicine
+
+### Build
+
+- Bump tempfile from 3.8.0 to 3.8.1
+- Change to rime.cx and semnix
+
 ## [0.1.6] - 2023-10-26
 
 ### Features
@@ -11,6 +26,7 @@
 ### Miscellaneous Tasks
 
 - Update all dependencies
+- Release fortune-kind v0.1.6
 
 ## [0.1.5] - 2023-10-19
 
