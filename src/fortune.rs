@@ -3,6 +3,7 @@ use crate::file;
 use crate::random;
 
 use std::env;
+use std::path::PathBuf;
 use std::process::exit;
 
 /// The default maximum length for a short quote.
@@ -27,30 +28,6 @@ fn get_fortune_off_dir() -> String {
     match env::var("FORTUNE_OFF_DIR") {
         Ok(val) => val,
         Err(_) => FORTUNE_OFF_DIR.to_string(),
-    }
-}
-
-// TODO: refactor
-fn handle_file_errors(
-    input: String,
-    f: &dyn Fn(String) -> Result<String, Box<dyn std::error::Error>>,
-) -> String {
-    use std::io::ErrorKind;
-    match f(input.clone()) {
-        Ok(val) => val,
-        Err(e) => {
-            if let Some(io_err) = e.downcast_ref::<std::io::Error>() {
-                match io_err {
-                    err if io_err.kind() == ErrorKind::NotFound => {
-                        eprintln!("{err}");
-                        println!("Couldn't find \"{input}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{input}\".",);
-                        std::process::exit(1);
-                    }
-                    &_ => panic!("{e:?}"),
-                }
-            }
-            panic!("{e:?}")
-        }
     }
 }
 
@@ -94,9 +71,8 @@ pub fn search_fortunes(pattern: &str) {
 /// get_quote(&255); // Prints a humorous message and exits.
 /// ```
 pub fn get_quote(quote_size: &u8) {
-    let fortune_dir = get_fortune_dir();
-
-    let file = handle_file_errors(fortune_dir, &file::pick_file);
+    //let file = handle_file_errors(fortune_dir, &file::pick_file);
+    let file = &random::get_random_file_weighted(PathBuf::from(get_fortune_dir())).unwrap();
 
     let quotes: Vec<&str> = file.split("\n%\n").collect();
 
@@ -131,29 +107,30 @@ pub fn get_quote(quote_size: &u8) {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use assert_cmd::Command;
-
-    // /// Tests the behavior of `get_quote` when the default size (1) is provided.
-    // /// It ensures that the output quote is within the expected length.
-    /* Doesn't work in CI
-    #[test]
-    fn test_get_quote_default_size() {
-        let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
-        cmd.arg("-s");
-        let output = cmd.output().unwrap();
-        assert!(output.stdout.len() <= SHORT as usize);
-    }
-
-    /// Tests the behavior of `get_quote` when the humorous message trigger (255) is provided.
-    /// It ensures that the output matches the expected humorous message.
-    #[test]
-    fn test_get_quote_humorous_message() {
-        let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
-        cmd.arg(format!("-{}", String::from("s").repeat(255)));
-        let output = cmd.output().unwrap();
-        assert_eq!(output.stdout, b"WE GET IT, YOU WANT A SHORT FORTUNE\n");
-    }*/
-}
+// TODO: yes, should be used or removed
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     use assert_cmd::Command;
+//
+//     // /// Tests the behavior of `get_quote` when the default size (1) is provided.
+//     // /// It ensures that the output quote is within the expected length.
+//     /* Doesn't work in CI
+//     #[test]
+//     fn test_get_quote_default_size() {
+//         let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
+//         cmd.arg("-s");
+//         let output = cmd.output().unwrap();
+//         assert!(output.stdout.len() <= SHORT as usize);
+//     }
+//
+//     /// Tests the behavior of `get_quote` when the humorous message trigger (255) is provided.
+//     /// It ensures that the output matches the expected humorous message.
+//     #[test]
+//     fn test_get_quote_humorous_message() {
+//         let mut cmd = Command::cargo_bin("fortune-kind").unwrap();
+//         cmd.arg(format!("-{}", String::from("s").repeat(255)));
+//         let output = cmd.output().unwrap();
+//         assert_eq!(output.stdout, b"WE GET IT, YOU WANT A SHORT FORTUNE\n");
+//     }*/
+// }

@@ -1,39 +1,7 @@
 //! A module for file related actions.
-use rand::prelude::SliceRandom;
 use std::fs;
 use std::io::Read;
-
-/// Picks a random file from a given directory and returns its contents as a string.
-///
-/// # Arguments
-///
-/// * `dir` - The path to the directory from which a random file will be chosen.
-///
-/// # Returns
-///
-/// A `Result` containing the contents of the randomly chosen file as a `String`.
-///
-/// # Errors
-///
-/// Returns an error if:
-/// * The provided directory path is invalid or inaccessible.
-/// * No files are found in the specified directory.
-/// * There's an issue reading the chosen file.
-///
-/// # Note
-///
-/// This function does not account for the number of fortunes (or entries) within the files.
-pub fn pick_file(dir: String) -> Result<String, Box<dyn std::error::Error>> {
-    let mut rng = rand::thread_rng();
-    let files: Vec<_> = fs::read_dir(dir)?.collect();
-    let file = files.choose(&mut rng).ok_or("No files found")?;
-    let path = file.as_ref().unwrap().path();
-
-    let mut contents = String::new();
-    fs::File::open(path)?.read_to_string(&mut contents)?;
-
-    Ok(contents)
-}
+use std::path::{Path, PathBuf};
 
 /// Reads the contents of all files in a given directory and returns them as a vector of strings.
 ///
@@ -66,6 +34,57 @@ pub fn read_all_files(dir: &str) -> Result<Vec<String>, Box<dyn std::error::Erro
     Ok(contents_vec)
 }
 
+/// Retrieves the sizes of files in the specified directory.
+///
+/// This function will traverse the directory given by `path` and return a vector
+/// of tuples. Each tuple contains the file size in bytes and the path to the file as `PathBuf`.
+///
+/// # Arguments
+///
+/// * `path` - A generic parameter that implements `AsRef<Path>`, which is the path to the directory to read.
+///
+/// # Returns
+///
+/// A `std::io::Result` containing a vector of tuples. Each tuple consists of a `u64` file size
+/// and a `PathBuf` corresponding to a file's path. If an error occurs during directory traversal
+/// or metadata retrieval, an `io::Error` is returned.
+///
+/// # Errors
+///
+/// This function will return an error in the following situations:
+///
+/// * The path does not exist.
+/// * The current process lacks permissions to read the directory.
+/// * The path points to a non-directory file.
+/// * Any I/O error encountered when reading the directory contents or retrieving file metadata.
+///
+/// # Examples
+///
+/// ```
+/// use std::path::Path;
+///
+/// let sizes = get_file_sizes(Path::new("./some/directory")).expect("Directory should be read");
+/// for (size, path) in sizes {
+///     println!("{} bytes - {:?}", size, path);
+/// }
+/// ```
+pub fn get_file_sizes<P: AsRef<Path>>(path: P) -> std::io::Result<Vec<(u64, PathBuf)>> {
+    let entries = fs::read_dir(path)?;
+    let mut files: Vec<(u64, PathBuf)> = vec![];
+
+    for entry in entries {
+        let entry = entry?;
+        let path = entry.path();
+
+        if path.is_file() {
+            let metadata = fs::metadata(&path)?;
+            files.push((metadata.len(), path));
+        }
+    }
+
+    Ok(files)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -87,17 +106,6 @@ mod tests {
         tmp_dir
     }
 
-    /// test_pick_file: Tests if the pick_file function can pick and read a file from a directory.
-    #[test]
-    fn test_pick_file() {
-        let tmp_dir = setup_test_directory();
-        let result = pick_file(tmp_dir.path().to_str().unwrap().to_string());
-
-        assert!(result.is_ok());
-        let content = result.unwrap();
-        assert!(content == "Content of file1\n" || content == "Content of file2\n");
-    }
-
     /// test_read_all_files: Tests if the read_all_files function can read all files from a directory.
     #[test]
     fn test_read_all_files() {
@@ -109,13 +117,6 @@ mod tests {
         assert_eq!(contents.len(), 2);
         assert!(contents.contains(&"Content of file1\n".to_string()));
         assert!(contents.contains(&"Content of file2\n".to_string()));
-    }
-
-    /// test_pick_file_invalid_dir: Tests the error handling of pick_file when given an invalid directory.
-    #[test]
-    fn test_pick_file_invalid_dir() {
-        let result = pick_file("invalid_directory".to_string());
-        assert!(result.is_err());
     }
 
     /// test_read_all_files_invalid_dir: Tests the error handling of read_all_files when given an invalid directory.
