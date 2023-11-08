@@ -1,6 +1,12 @@
 //! A module for generating random numbers.
+use std::path::PathBuf;
+
+use rand::prelude::SliceRandom;
 use rand::thread_rng;
 use rand::Rng;
+use std::io::Read;
+
+use crate::file::get_file_sizes;
 
 /// Generates a random number between 0 (inclusive) and the given upper bound (exclusive).
 ///
@@ -23,6 +29,28 @@ use rand::Rng;
 pub fn random(i: usize) -> usize {
     let mut rng = thread_rng();
     rng.gen_range(0..i)
+}
+
+pub fn get_random_file_weighted(path: PathBuf) -> std::io::Result<String> {
+    use std::io::ErrorKind;
+    let mut rng = thread_rng();
+    match get_file_sizes(&path) {
+        Ok(mut files) => {
+            files.sort_unstable_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
+            let mut contents = String::new();
+            std::fs::File::open(&files.choose_weighted(&mut rng, |item| item.0).unwrap().1)?
+                .read_to_string(&mut contents)?;
+            Ok(contents)
+        }
+        Err(e) => match e.kind() {
+            ErrorKind::NotFound => {
+                eprintln!("{e}");
+                println!("Couldn't find \"{path:?}\", make sure you set FORTUNE_DIR correctly, or verify that you're in a directory with a folder named \"{path:?}\".",);
+                std::process::exit(1);
+            }
+            _ => panic!("Error: {}", e),
+        },
+    }
 }
 
 #[cfg(test)]
