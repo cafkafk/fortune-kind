@@ -1,3 +1,10 @@
+<!--
+SPDX-FileCopyrightText: 2023 Christina Sørensen
+SPDX-FileContributor: Christina Sørensen
+
+SPDX-License-Identifier: CC-BY-NC-SA-4.0
+-->
+
 # Editorial Guidelines
 
 This document is intended to serve as a set of guidelines to help make

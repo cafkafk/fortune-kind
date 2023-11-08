@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2023 Christina Sørensen
+// SPDX-FileContributor: Christina Sørensen
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 //! A module for retrieving random quotes (or fortune).
 use crate::file;
 use crate::random;

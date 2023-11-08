@@ -1,8 +1,15 @@
+<!--
+SPDX-FileCopyrightText: 2023 Christina Sørensen
+SPDX-FileContributor: Christina Sørensen
+
+SPDX-License-Identifier: CC-BY-NC-SA-4.0
+-->
+
 <div align="center">
 
 # Fortune Kind
 
-![Usage GIF](out.gif)
+![Usage GIF](docs/images/demo.gif)
 
 [![Built with Nix](https://img.shields.io/badge/Built_With-Nix-5277C3.svg?logo=nixos&labelColor=73C3D5)](https://nixos.org)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)

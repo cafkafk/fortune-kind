@@ -1,16 +1,40 @@
+# SPDX-FileCopyrightText: 2023 Christina Sørensen
+# SPDX-FileContributor: Christina Sørensen
+#
+# SPDX-License-Identifier: AGPL-3.0-only
 {
   description = "fortune-kind: A new kinda fortune.";
 
   inputs = {
-    nixpkgs.url = "http:/rime.cx/v1/github/NixOS/nixpkgs/b/nixpkgs-unstable.tar.gz";
+    nixpkgs = {
+      url = "http:/rime.cx/v1/github/NixOS/nixpkgs/b/nixpkgs-unstable.tar.gz";
+    };
 
-    flake-utils.url = "http://rime.cx/v1/github/semnix/flake-utils.tar.gz";
+    flake-utils = {
+      url = "http://rime.cx/v1/github/semnix/flake-utils.tar.gz";
+    };
 
-    naersk.url = "http://rime.cx/v1/github/semnix/naersk.tar.gz";
+    naersk = {
+      url = "http://rime.cx/v1/github/semnix/naersk.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    rust-overlay.url = "http://rime.cx/v1/github/semnix/rust-overlay.tar.gz";
+    rust-overlay = {
+      url = "http://rime.cx/v1/github/semnix/rust-overlay.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
-    treefmt-nix.url = "http://rime.cx/v1/github/semnix/treefmt-nix.tar.gz";
+    treefmt-nix = {
+      url = "http://rime.cx/v1/github/semnix/treefmt-nix.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pre-commit-hooks = {
+      url = "http://rime.cx/v1/github/semnix/pre-commit-hooks.nix.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = {
@@ -20,6 +44,7 @@
     nixpkgs,
     treefmt-nix,
     rust-overlay,
+    pre-commit-hooks,
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
@@ -102,14 +127,42 @@
 
         # For `nix develop`:
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [rustup toolchain just zip];
+          inherit (self.checks.${system}.pre-commit-check) shellHook;
+          nativeBuildInputs = with pkgs; [rustup toolchain just zip reuse];
         };
 
-        # for `nix flake check`
+        # For `nix flake check`
         checks = {
+          pre-commit-check = let
+            # some treefmt formatters are not supported in pre-commit-hooks we filter them out for now.
+            toFilter =
+              # HACK: This is a nice hack to not have to manually filter we should keep in mind for a future refactor.
+              # Stolen from eza
+              ["yamlfmt"];
+            filterFn = n: _v: (!builtins.elem n toFilter);
+            treefmtFormatters = pkgs.lib.mapAttrs (_n: v: {inherit (v) enable;}) (pkgs.lib.filterAttrs filterFn (import ./treefmt.nix).programs);
+          in
+            pre-commit-hooks.lib.${system}.run {
+              src = ./.;
+              hooks =
+                treefmtFormatters
+                // {
+                  convco.enable = true; # not in treefmt
+                  reuse = {
+                    enable = true;
+                    name = "reuse";
+                    entry = with pkgs; "${pkgs.reuse}/bin/reuse lint";
+                    pass_filenames = false;
+                  };
+                };
+            };
           formatting = treefmtEval.config.build.check self;
           build = packages.check;
-          test = packages.test;
+          inherit
+            (packages)
+            default
+            test
+            ;
           lint = packages.clippy;
         };
       }

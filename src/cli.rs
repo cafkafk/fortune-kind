@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2023 Christina Sørensen
+// SPDX-FileContributor: Christina Sørensen
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 use clap::{arg, command, crate_authors, Arg, Command};
 
 pub fn build_cli() -> Command {
