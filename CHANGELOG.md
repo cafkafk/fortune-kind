@@ -7,6 +7,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.8] - 2023-11-09
+
+### Features
+
+- Fair randomness calculation
+- Flake refactor, REUSE compliance
+- Port 198 lines of riddles
+
+### Build
+
+- Bump DeterminateSystems/nix-installer-action from 6 to 7
+
 ## [0.1.7] - 2023-11-02
 
 ### Bug Fixes
@@ -16,6 +28,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 ### Features
 
 - Port 241 lines of medicine
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.7
 
 ### Build
 
