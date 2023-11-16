@@ -7,6 +7,16 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.9] - 2023-11-16
+
+### Features
+
+- Port 227 lines of people
+
+### Build
+
+- Bump clap from 4.4.7 to 4.4.8
+
 ## [0.1.8] - 2023-11-09
 
 ### Features
@@ -14,6 +24,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 - Fair randomness calculation
 - Flake refactor, REUSE compliance
 - Port 198 lines of riddles
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.8
 
 ### Build
 
