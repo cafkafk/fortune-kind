@@ -7,11 +7,25 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.10] - 2023-11-23
+
+### Features
+
+- Port 484 lines of miscellaneous
+
+### Miscellaneous Tasks
+
+- Update flake inputs
+
 ## [0.1.9] - 2023-11-16
 
 ### Features
 
 - Port 227 lines of people
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.9
 
 ### Build
 
