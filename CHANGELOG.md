@@ -7,6 +7,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.11] - 2023-11-30
+
+### Features
+
+- Port 200 lines of miscellaneous
+
+### Build
+
+- Bump DeterminateSystems/nix-installer-action from 7 to 8
+- Bump webiny/action-conventional-commits from 1.1.0 to 1.2.0
+- Bump grep-matcher from 0.1.6 to 0.1.7
+
 ## [0.1.10] - 2023-11-23
 
 ### Features
@@ -16,6 +28,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 ### Miscellaneous Tasks
 
 - Update flake inputs
+- Release fortune-kind v0.1.10
 
 ## [0.1.9] - 2023-11-16
 
