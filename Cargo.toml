@@ -22,7 +22,7 @@ clap = { version = "4.4.8", features = ["cargo"] }
 grep = "0.2.12"
 grep-matcher = "0.1.7"
 grep-regex = "0.1.12"
-grep-searcher = "0.1.11"
+grep-searcher = "0.1.13"
 rand = "0.8.5"
 
 [dev-dependencies]
