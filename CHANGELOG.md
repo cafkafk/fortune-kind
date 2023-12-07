@@ -7,11 +7,27 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.12] - 2023-12-07
+
+### Features
+
+- Port 187 lines of computers
+
+### Build
+
+- Bump grep-regex from 0.1.11 to 0.1.12
+- Bump grep-searcher from 0.1.11 to 0.1.13
+- Bump clap from 4.4.8 to 4.4.11
+
 ## [0.1.11] - 2023-11-30
 
 ### Features
 
 - Port 200 lines of miscellaneous
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.11
 
 ### Build
 
