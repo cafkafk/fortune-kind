@@ -18,7 +18,7 @@ version = "0.1.12"
 build = "build.rs"
 
 [dependencies]
-clap = { version = "4.4.11", features = ["cargo"] }
+clap = { version = "4.4.18", features = ["cargo"] }
 grep = "0.3.1"
 grep-matcher = "0.1.7"
 grep-regex = "0.1.12"
@@ -30,6 +30,6 @@ assert_cmd = "2.0.12"
 tempfile = "3.8.1"
 
 [build-dependencies]
-clap = { version = "4.4.11", features = ["cargo"] }
+clap = { version = "4.4.18", features = ["cargo"] }
 clap_complete = "4"
 clap_mangen = "0.2.14"
