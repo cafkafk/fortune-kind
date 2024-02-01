@@ -7,11 +7,37 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # Changelog
 
+## [0.1.13] - 2024-02-01
+
+### Features
+
+- Add one fedi fortune
+
+### Build
+
+- Bump actions/stale from 8 to 9
+- Bump DeterminateSystems/nix-installer-action from 8 to 9
+- Bump grep from 0.2.12 to 0.3.1
+- Bump clap from 4.4.11 to 4.4.18
+- Bump clap_complete from 4.4.4 to 4.4.9
+- Bump assert_cmd from 2.0.12 to 2.0.13
+- Bump tempfile from 3.8.1 to 3.9.0
+- Bump clap_mangen from 0.2.15 to 0.2.17
+- Change flake inputs
+
+### Ci
+
+- Remove stalebot
+
 ## [0.1.12] - 2023-12-07
 
 ### Features
 
 - Port 187 lines of computers
+
+### Miscellaneous Tasks
+
+- Release fortune-kind v0.1.12
 
 ### Build
 
