@@ -26,7 +26,7 @@ grep-searcher = "0.1.13"
 rand = "0.8.5"
 
 [dev-dependencies]
-assert_cmd = "2.0.13"
+assert_cmd = "2.0.14"
 tempfile = "3.9.0"
 
 [build-dependencies]
