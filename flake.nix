@@ -11,7 +11,7 @@
     };
 
     flake-utils = {
-      url = "github:semnix/flake-utils";
+      url = "github:numtide/flake-utils";
     };
 
     naersk = {
