@@ -98,7 +98,6 @@ pub fn get_quote(quote_size: &u8) {
             if target_length < 1 {
                 target_length = 1;
             }
-            println!("{n}");
             for q in &quotes {
                 if q.len() <= target_length {
                     tmp.push(q)
